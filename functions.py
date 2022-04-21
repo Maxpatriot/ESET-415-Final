@@ -1,1 +1,0 @@
-def rsa_encryption(msg, e, n)
