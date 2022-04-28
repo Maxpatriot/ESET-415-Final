@@ -1,5 +1,5 @@
 import socket
-import hashlib
+import sys
 import helper as help
 
 _host = "127.0.0.1"
@@ -14,8 +14,10 @@ clients = {}
 
 logged_in = help.Client(["","","","","",""])
 
-# _port = int(input("input a port number "))
+#_port = int(input("input a port number "))
 
+if "-p" in sys.argv:
+    _port = int(sys.argv.pop())
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.settimeout(15)
@@ -26,7 +28,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     keys = (data.decode()).split(',')
     client_e, client_n = (int)(keys[0]), (int)(keys[1])
     conn.sendall(("{},{}".format(e, n)).encode())
-    h = hashlib.new('sha256')
+    # h = hashlib.new('sha256')
     with conn:
         print("Connected by {}".format(addr))
         while True:
@@ -62,7 +64,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 data = conn.recv(1024)
                 pswd = help.rsa_encryption(data.decode(), d, n)
                 try:
-                    h.update((uname + pswd).encode())
+                    print(hash(uname+pswd))
                     if clients[uname].password == hash(uname+pswd):
                         logged_in = clients[uname]
                         conn.sendall(b"Connected\nEnter 'y' to continue...")

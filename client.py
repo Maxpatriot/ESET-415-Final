@@ -2,7 +2,7 @@ import socket
 import helper as help
 
 _host = "127.0.0.1"
-_port = 8000
+_port = 8001
 
 p, q, e, d = 83, 61, 53, 557
 n = p * q
@@ -10,7 +10,7 @@ n = p * q
 server_e = 0
 server_n = 0
 
-# _port = int(input("input a port number "))
+_port = int(input("input a port number "))
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.settimeout(10)
